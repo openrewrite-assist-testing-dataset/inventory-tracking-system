@@ -1,0 +1,35 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ include "inventory-tracking-system.fullname" . }}
+  labels:
+    {{- include "inventory-tracking-system.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "inventory-tracking-system.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "inventory-tracking-system.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          env:
+            - name: DATABASE_URL
+              value: "jdbc:mysql://{{ .Values.database.host }}:{{ .Values.database.port }}/{{ .Values.database.name }}"
+            - name: DATABASE_USER
+              value: "{{ .Values.database.user }}"
+            - name: DATABASE_PASSWORD
+              value: "{{ .Values.database.password }}"
+            - name: JWT_SECRET
+              value: "{{ .Values.jwt.secret }}"
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}

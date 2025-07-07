@@ -1,0 +1,2 @@
+rootProject.name = 'inventory-tracking-system'
+include 'api', 'core', 'db'

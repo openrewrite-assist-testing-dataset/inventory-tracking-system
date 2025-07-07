@@ -1,0 +1,6 @@
+dependencies {
+    implementation project(':core')
+    implementation 'org.jdbi:jdbi3-core:3.28.0'
+    implementation 'org.jdbi:jdbi3-sqlobject:3.28.0'
+    implementation 'mysql:mysql-connector-java:8.0.30'
+}

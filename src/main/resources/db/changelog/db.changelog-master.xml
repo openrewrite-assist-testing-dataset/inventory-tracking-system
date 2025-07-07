@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="1" author="inventory-system">
+        <createTable tableName="items">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT"/>
+            <column name="sku" type="VARCHAR(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="quantity" type="INT" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="DECIMAL(10,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category" type="VARCHAR(100)"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="inventory-system">
+        <createIndex indexName="idx_items_category" tableName="items">
+            <column name="category"/>
+        </createIndex>
+        <createIndex indexName="idx_items_sku" tableName="items">
+            <column name="sku"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="3" author="inventory-system">
+        <insert tableName="items">
+            <column name="name" value="Laptop"/>
+            <column name="description" value="High-performance laptop for business use"/>
+            <column name="sku" value="LAPTOP-001"/>
+            <column name="quantity" value="50"/>
+            <column name="price" value="999.99"/>
+            <column name="category" value="Electronics"/>
+        </insert>
+        <insert tableName="items">
+            <column name="name" value="Office Chair"/>
+            <column name="description" value="Ergonomic office chair with lumbar support"/>
+            <column name="sku" value="CHAIR-001"/>
+            <column name="quantity" value="25"/>
+            <column name="price" value="249.99"/>
+            <column name="category" value="Furniture"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

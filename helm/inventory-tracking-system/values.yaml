@@ -1,0 +1,34 @@
+replicaCount: 1
+
+image:
+  repository: inventory-tracking-system
+  pullPolicy: IfNotPresent
+  tag: "1.0.0"
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 8080
+
+ingress:
+  enabled: false
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+  requests:
+    cpu: 500m
+    memory: 512Mi
+
+database:
+  host: mysql
+  port: 3306
+  name: inventory_db
+  user: inventory
+  password: inventory123
+
+jwt:
+  secret: "mySecretKey123ForInventorySystem"
