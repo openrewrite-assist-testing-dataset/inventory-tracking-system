@@ -41,3 +41,6 @@ logging:
       archivedLogFilenamePattern: ./logs/inventory-%d{yyyy-MM-dd}.log
       archivedFileCount: 5
       timeZone: UTC
+
+swagger:
+  resourcePackage: "com.example.inventory.api"

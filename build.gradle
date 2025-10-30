@@ -48,9 +48,7 @@ dependencies {
     implementation 'io.dropwizard:dropwizard-migrations:2.1.4'
     implementation 'mysql:mysql-connector-java:8.0.30'
     implementation 'com.auth0:java-jwt:4.0.0'
-    implementation 'io.swagger:swagger-core:1.6.6'
-    implementation 'io.swagger:swagger-jersey2-jaxrs:1.6.6'
-    implementation 'io.swagger:swagger-annotations:1.6.6'
+    implementation 'in.vectorpro.dropwizard:dropwizard-swagger:2.0.28-3'
     
     testImplementation 'io.dropwizard:dropwizard-testing:2.1.4'
     testImplementation 'com.h2database:h2:2.1.214'
