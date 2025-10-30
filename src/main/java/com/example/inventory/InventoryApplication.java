@@ -14,9 +14,9 @@ import io.dropwizard.jdbi3.JdbiFactory;
 import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import io.swagger.jaxrs.config.BeanConfig;
-import io.swagger.jaxrs.listing.ApiListingResource;
-import io.swagger.jaxrs.listing.SwaggerSerializers;
+import in.vectorpro.dropwizard.swagger.SwaggerBundle;
+import in.vectorpro.dropwizard.swagger.SwaggerBundleConfiguration;
+
 import org.jdbi.v3.core.Jdbi;
 
 import javax.sql.DataSource;
@@ -38,6 +38,13 @@ public class InventoryApplication extends Application<InventoryConfiguration> {
             @Override
             public DataSourceFactory getDataSourceFactory(InventoryConfiguration configuration) {
                 return configuration.getDataSourceFactory();
+            }
+        });
+
+        bootstrap.addBundle(new SwaggerBundle<InventoryConfiguration>() {
+            @Override
+            protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(InventoryConfiguration configuration) {
+                return configuration.getSwaggerBundleConfiguration();
             }
         });
     }
@@ -62,19 +69,5 @@ public class InventoryApplication extends Application<InventoryConfiguration> {
 
         // Register resources
         environment.jersey().register(new ItemResource(itemDAO, rawJdbcItemDAO));
-
-        // Setup Swagger
-        configureSwagger(environment);
-    }
-
-    private void configureSwagger(Environment environment) {
-        BeanConfig config = new BeanConfig();
-        config.setTitle("Inventory Tracking API");
-        config.setVersion("1.0.0");
-        config.setResourcePackage("com.example.inventory.api");
-        config.setScan(true);
-        
-        environment.jersey().register(new ApiListingResource());
-        environment.jersey().register(new SwaggerSerializers());
     }
 }
